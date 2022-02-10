@@ -12,6 +12,8 @@ find_package(Threads REQUIRED)
 find_package(OpenCL REQUIRED)
 find_package(PythonInterp 3 REQUIRED)
 
+find_package(CUDA 10.0 REQUIRED)
+
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/vendor/Catch2/CMakeLists.txt")
     message(FATAL_ERROR "The git submodule vendor/Catch2 is missing.\nTry running `git submodule update --init`.")
 endif()
@@ -111,6 +113,15 @@ option(SYCL_CTS_ENABLE_OPENCL_INTEROP_TESTS
        "Enable OpenCL interoperability tests." ON)
 if(SYCL_CTS_ENABLE_OPENCL_INTEROP_TESTS)
     add_host_and_device_compiler_definitions(-DSYCL_CTS_TEST_OPENCL_INTEROP)
+endif()
+# ------------------
+
+# ------------------
+# OpenCL interoperability
+option(SYCL_CTS_ENABLE_CUDA_INTEROP_TESTS
+	"Enable CUDA interoperability tests." ON)
+if(SYCL_CTS_ENABLE_CUDA_INTEROP_TESTS)
+    add_host_and_device_compiler_definitions(-DSYCL_CTS_TEST_CUDA_INTEROP)
 endif()
 # ------------------
 
